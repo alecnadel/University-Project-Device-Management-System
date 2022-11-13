@@ -1,5 +1,3 @@
-# Project1Group3-S1-2022
-
 ## Device Tracking System
 
 Issue date: 	March 30, 2022 
