@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+connect.py
+db/db_connection.py
+.idea/*
+db/db_connection.py
+db/db_connection.py
+db/db_connection.py
