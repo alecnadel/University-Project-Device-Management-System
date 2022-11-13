@@ -1,0 +1,76 @@
+{% extends "root.html" %}
+{%block content%}
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="home" viewBox="0 0 16 16">
+        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+    </symbol>
+    <symbol id="people-circle" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        <path fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+    </symbol>
+
+    <symbol id="device-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+    </symbol>
+
+    <symbol id="logout" viewBox="0 0 16 16">
+        <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+        <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+</svg>
+</symbol>
+</svg>
+<header>
+    <div class="px-3 py-2 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                </a>
+
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li>
+                        <a href="/Search" class="nav-link text-white">
+                            <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                                <use xlink:href="#device-list"/>
+                            </svg>
+                            View Devices
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/home" class="nav-link text-white">
+                            <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                                <use xlink:href="#home"/>
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/profile" class="nav-link text-white">
+                            <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                                <use xlink:href="#people-circle"/>
+                            </svg>
+                            Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/" class="nav-link text-white">
+                            <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                                <use xlink:href="#logout"/>
+                            </svg>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+{% include "user/landingPage.html" %}
+<div style="width: 100%" class="container">{% block section %}{% endblock %}</div>
+<!-- 
+<footer>
+    <div class="px-3 py-2 bg-dark text-white">@2022</div>
+</footer> -->
+{% endblock %}

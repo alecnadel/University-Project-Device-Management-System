@@ -1,0 +1,50 @@
+
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <input type="text" class="form-control" id="general_search" 
+            name="general_search" placeholder="Search">
+
+        <input type="text" class="form-control" id="general_search" 
+             name="general_search" placeholder="Search">
+
+        <input type="text" class="form-control" id="general_search" 
+            name="general_search" placeholder="Search">
+
+        <input type="text" class="form-control" id="general_search" 
+            name="general_search" placeholder="Search">
+
+        <select class="form-select" aria-label="Default select example">
+            <option value="{{}}">{{}}</option>
+            
+            </select>
+        
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            </select>
+
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            </select>
+        
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            </select>
+      </div>
+    </div>
+
+
+
+
+    

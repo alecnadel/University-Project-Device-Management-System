@@ -1,0 +1,123 @@
+{% extends "admin/home.html" %}
+{% block section %}
+
+<div class="w-75 px-5 py-2 mx-auto mt-4">
+    <div class="col-md-7 col-lg-8">
+     <h4 class="mb-3">Add New Devices</h4>
+        <form action="/admin/addnewdevice" method="POST" class="needs-validation"
+        novalidate>
+            {% if newdevice %}
+            
+            {% endif %}  
+            <form class="row gy-2 gx-3 align-items-center">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="Device_Name" class="form-label">Device_Name:</label>
+                        <input type="text" class="form-control required" id="Device_Name" name="Device_Name" required/>  
+                        {% if device %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Device Name already exists try another
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+                        <div class="invalid input">
+                            
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="Device_Type" class="form-label">Device_Type:</label>
+                        <input type="text" class="form-control required" id="Device_Type" name="Device_Type" required/>  
+                            <div class="valid input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="OS_Type" class="form-label">OS_Type:</label>
+                        <input type="text" class="form-control required" id="OS_Type" name="OS_Type"/> 
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="OS_Version" class="form-label">OS_Version:</label>
+                        <input type="text" class="form-control required" id="OS_Version" name="OS_Version" required/>  
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="Ram" class="form-label">Ram:</label>
+                        <input type="text" class="form-control required" id="Ram" name="Ram" required/> 
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+                
+
+                    <div class="col-sm-6">
+                        <label for="CPU" class="form-label">CPU:</label>
+                        <input type="text" class="form-control required" id="CPU" name="CPU"/>  
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="Bits" class="form-label">Bits:</label>
+                        <input type="number" class="form-control required" id="Bits" name="Bits"/>  
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="Screen_Resolution" class="form-label">Screen_Resolution:</label>
+                        <input type="text" class="form-control required" id="Screen_Resolution" name="Screen_Resolution"/>  
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="Grade" class="form-label">Grade:</label>
+                        <input type="text" class="form-control required" id="Grade" name="Grade"/> 
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="UUID" class="form-label">UUID:</label>
+                        <input type="text" class="form-control required" id="UUID" name="UUID"/> 
+                            <div class="valid-input">
+                                
+                            </div> <br>
+                    </div>
+                
+                
+
+                    <div class="col-sm-6">
+                        <p>Available</p>
+                        <div class="form-check">
+                        
+                        <input class="form-check-input" type="radio" id="Available" name="Available" value="1"checked {% if newdevice %} value="{{newdevice[10]}}" {% endif %}/>
+                        <label class="form-check-label" for="Available">Available</label>
+                        </div> <br>
+                    </div>
+                </div>
+
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Add Device</button>
+                    <button class="w-100 btn btn-secondary btn-lg" type="reset">Reset</button>
+
+            </form>
+        </form>
+    </div>
+</div>
+{% endblock %}

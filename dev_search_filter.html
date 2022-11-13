@@ -1,0 +1,691 @@
+{% extends "root.html" %}
+{% block content %}
+
+
+<link href="{{ url_for('static', filename='styles/table_sort.css') }}" rel="stylesheet" type="text/css" />
+<meta id="BorrowedDevice" data-name="{{CountDevice}}">
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="home" viewBox="0 0 16 16">
+      <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+  </symbol>
+  <symbol id="people-circle" viewBox="0 0 16 16">
+      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+      <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+  </symbol>
+
+  <symbol id="device-list" viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+            d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+  </symbol>
+
+  <symbol id="logout" viewBox="0 0 16 16">
+      <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+      <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+</svg>
+</symbol>
+</svg>
+<header>
+  <div class="px-3 py-2 bg-dark text-white">
+      <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+              <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+              </a>
+
+              <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                  <li>
+                      <a href="/Search" class="nav-link text-white" disabled="disabled">
+                          <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                              <use xlink:href="#device-list"/>
+                          </svg>
+                          View Devices
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/user/home" class="nav-link text-white">
+                          <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                              <use xlink:href="#home"/>
+                          </svg>
+                          Home
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/user/profile" class="nav-link text-white">
+                          <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                              <use xlink:href="#people-circle"/>
+                          </svg>
+                          Profile
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/" class="nav-link text-white">
+                          <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                              <use xlink:href="#logout"/>
+                          </svg>
+                          Logout
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</header>
+
+
+<!-- <table id="dtBasicExample" 
+        class="table table-striped table-bordered table-sm dataTable" 
+        role="grid" aria-describedby="dtBasicExample_info" 
+        style="width: 100%;" w
+        idth="100%" 
+        cellspacing="0">
+
+</table> -->
+<div class="d-flex justify-content-center py-2">
+<button id="deviceborrow" type="button" class="btn btn-dark align-items-center py-2 px-3" data-bs-toggle="modal" data-bs-target="#deviceform">
+  Borrow devices
+</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deviceform" tabindex="-1" aria-labelledby="deviceformLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deviceformLabel">Check out Devices</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="deviceform_input">
+        
+      </div>
+      <div class="modal-footer">
+        <button id="btn_close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="btn_submit" type="button" onclick="submitform()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="table-responsive table-sortable">
+  <div class="row justify-content-center">
+  <div class="col-6 py-2">
+    <input type="text" class="search-input col-12 form-control" placeholder="Search"  name="titles">
+  </div>
+
+  <table id="dtBasicExample" 
+    class="table table-striped table-bordered table-sm dataTable table-sortable" 
+    role="grid" aria-describedby="dtBasicExample_info" 
+    style="width: 95%;" width="100%" 
+    cellspacing="0">
+    
+        <thead>
+            <tr>
+
+                {% for col in dev_headers %}
+                <th class="sort">
+                     {{col}}   
+                </th>
+                {% endfor %}
+                
+            </tr>
+            <tr>
+              
+              <td>
+                <input type="text" class="search-input col-12" data-order="" name="titles">
+              </td>
+              <td>
+                <input type="text" class="search-input col-12" data-order="" name="titles">
+              </td>
+              <td>
+                <input type="text" class="search-input col-12" data-order="" name="titles">
+              </td>
+              <td>
+                <input type="text" class="search-input col-12" data-order="" name="titles">
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <label for="availability_check">available</label>
+                <input type="checkbox" class="availability_check col-sm-2" >
+              </td>
+              
+            </tr>
+        </thead>
+        <tbody id="table_body">
+            {% for device in devices %}
+            <style>
+                table td:hover {
+                background-color: rgba(0,0,0,.075);
+                }
+            </style>
+            <tr>
+                <td>{{device[0]}}</td>
+                <td>{{device[1]}}</td>
+                <td>{{device[2]}}</td>
+                <td>{{device[3]}}</td>
+                <td>{{device[4]}}</td>
+                <td>{{device[5]}}</td>
+                <td>{{device[6]}}</td>
+                <td>{{device[7]}}</td>
+                <td>{{device[8]}}</td>
+                {%for borrowed in All_BorrowedDevices if device[0]==borrowed[0] %}
+                    
+                    <td id="availability">
+                        <button class="popup btn btn-dark" onclick="myFunction('borrowed by {{borrowed[1]}} and will be available on the {{borrowed[2]}}')">
+                            Unavailable
+                        </button>
+                    </td>
+                    {% else %}
+                <td>
+                  <label for="check_device">available</label>
+                  <input type="checkbox" class="check_device col-sm-2" >
+                </td>
+            {% endfor %}
+                
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+  </div>
+</div>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
+
+<br>
+<div class="alert alert-primary d-flex align-items-center" style="visibility : hidden" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+  <div>
+    No devices found fitting your search requirements
+  </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="static\js\table_search.js"></script>
+
+<label for="ReturnDate" class="form-control"></label>
+
+<!-- <script>
+
+function formatDate(dateVal) {
+    var newDate = new Date(dateVal);
+
+    var sMonth = padValue(newDate.getMonth() + 1);
+    var sDay = padValue(newDate.getDate());
+    var sYear = newDate.getFullYear();
+    var sHour = newDate.getHours();
+    var sMinute = padValue(newDate.getMinutes());
+    var sSeconds = padValue(newDate.getSeconds());
+    var sAMPM = "AM";
+
+    var iHourCheck = parseInt(sHour);
+
+    if (iHourCheck > 12) {
+        sAMPM = "PM";
+        sHour = iHourCheck - 12;
+    }
+    else if (iHourCheck === 0) {
+        sHour = "12";
+    }
+
+    sHour = padValue(sHour);
+
+    return sYear+ "-" + sMonth + "-" + sDay + " " + sHour + ":" + sMinute + ":" + sSeconds;
+}
+
+function padValue(value) {
+    return (value < 10) ? "0" + value : value;
+}
+
+function submitform() {
+  var x = document.getElementsByName('DeviceBorrow');
+    x[0].submit(); // Form submission
+}
+ 
+
+document.getElementById("deviceborrow").onclick = function() {
+  const checked_devices = document.querySelectorAll(".check_device:checked");
+  var count = parseInt(document.querySelector('#BorrowedDevice').getAttribute("data-name"));
+  const device_form = document.querySelector("#deviceform_input");
+
+  device_form.innerHTML = "";
+  if (count + checked_devices.length > 3) {
+    
+    const message = document.createElement("span")
+    message.id = "error_message";
+    // message.removeChild(message.firstChild)
+    // while (message.firstChild) message.removeChild(message.firstChild);
+    message.innerHTML = "Maximum number of Borrowed devices already reached";
+    device_form.appendChild(message)
+    document.getElementById("btn_submit").disabled = true;//.style.visibility = "hidden";
+    // document.getElementById("btn_close").style.visibility = "hidden";
+    // btn_close
+  } else if (checked_devices.length <= 0) {
+    const message = document.createElement("span")
+    message.id = "error_message";
+    // message.removeChild(message.firstChild)
+    while (message.firstChild) message.removeChild(message.firstChild);
+    message.innerHTML = "No new Devices selected";
+    device_form.appendChild(message)
+    document.getElementById("btn_submit").disabled = true;
+  } else if (count + checked_devices.length <=3) {
+  console.log("device_form",device_form)
+  var checkedrows = [];
+  document.getElementById("btn_submit").disabled = false;
+  // console.log("1checked_devices",checked_devices)
+
+  var devForm = document.createElement("form");
+  devForm.method = "POST"
+  devForm.action = "/Search"
+  devForm.name = "DeviceBorrow"
+  device_form.appendChild(devForm)
+  
+  var i = checked_devices.length
+  var count = document.createElement("input");
+  count.type = "hidden"
+  count.id = "count"
+  count.name = "count"
+  count.value = i
+  devForm.appendChild(count);
+
+  var n = 0
+  for (const inputcheck of checked_devices) {
+    n += 1;
+    var title = (inputcheck.parentNode.parentNode.children[0]).cloneNode(true)
+    var labeltitle = document.createElement("label");
+    labeltitle.innerText = "Device name:  "
+    
+    var current = new Date(); //'Mar 11 2015' current.getTime() = 1426060964567
+    var ReturnDate = new Date(current.getTime() + 14*86400000); // + 1 day in ms
+
+    var labelReturn = document.createElement("label");
+    labelReturn.for = `ReturnDate_${n}`
+    labelReturn.innerText = "Return date:  "
+    var Return = document.createElement("input");
+    Return.type = "datetime-local";
+    Return.className = "form-control px-3 py-2"
+    Return.id = `ReturnDate_${n}`;
+    Return.name = `ReturnDate_${n}`;
+    console.log("ReturnDate.toISOString().slice(0,16)",ReturnDate.toISOString().slice(0,16))
+    var ReturnDate = ReturnDate.toISOString().slice(0,16)
+    Return.value = ReturnDate;
+    // console.log(`ReturnDate_${n}`);
+    
+    var Device_name = document.createElement("input");
+    Device_name.type = "hidden";
+    Device_name.id = `Device_name_${n}`;
+    Device_name.name = `Device_name_${n}`;
+    Device_name.value = title.innerHTML;
+
+    var Start_Date = document.createElement("input");
+    Start_Date.type = "hidden";
+    Start_Date.id = `Start_Date_${n}`;
+    Start_Date.name = `Start_Date_${n}`;
+    var start = Date();
+    start = formatDate(start)
+    Start_Date.value = start;
+
+    devForm.appendChild(Start_Date);
+    devForm.appendChild(Device_name);
+    devForm.appendChild(labeltitle)
+    devForm.appendChild(title);
+    devForm.appendChild(labelReturn)
+    devForm.appendChild(Return); 
+  } 
+  };
+  
+  
+
+  //document.getElementById("check_device").chi
+  // checked_devices.closest('tr')
+  console.log("checkedrows",checkedrows)
+  
+
+};
+
+
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const ip = document.querySelectorAll(".search-input")
+//   console.log("ip",ip)
+//   document.querySelectorAll(".search-input").forEach((inputField) => {
+//     const tableRows = inputField
+//       .closest("table")
+//       .querySelectorAll("tbody > tr");
+//     // console.log("tableRows",tableRows)
+//     const headerCell = inputField.closest("td");
+//     // console.log("headerCell",headerCell)
+//     const otherHeaderCells = headerCell.closest("tr").children;
+//     // console.log("otherHeaderCells",otherHeaderCells)
+//     const columnIndex = Array.from(otherHeaderCells).indexOf(headerCell);
+//     // console.log("columnIndex",columnIndex)
+//     const searchableCells = Array.from(tableRows).map(
+//       (row) => row.querySelectorAll("td")[columnIndex]
+//     );
+
+  
+    
+//     // console.log("searchableCells",searchableCells)
+//     inputField.addEventListener("input", () => {
+//       console.log(document.querySelectorAll(".search-input"))
+//       const searchQuerys = document.querySelectorAll(".search-input");
+
+//       const searchQuery = inputField.value.toLowerCase();
+
+//       for (const tableCell of searchableCells) {
+//         const row = tableCell.closest("tr");
+//         const value = tableCell.textContent.toLowerCase().replace(",", "");
+
+//         row.style.visibility = null;
+
+//         if (value.search(searchQuery) === -1) {
+//           row.style.visibility = "collapse";
+//         }
+
+//       }
+//       const notvis_rows = document.querySelectorAll("#table_body tr[style='visibility: collapse;']");
+//       const all_rows = document.querySelectorAll("#table_body tr");
+//       var i = all_rows.length - notvis_rows.length
+//       console.log("vis",  i)
+//       const alert = document.querySelector(".alert");
+//       if (i == 0) {
+//         alert.style.visibility = null;
+//       } else {
+//         alert.style.visibility = "hidden";
+//       };
+
+//     });
+    
+    
+
+//   });
+
+//   const notborrowed = document.querySelector(".availability_check")
+//     console.log("notborrowed",  notborrowed)
+//     notborrowed.addEventListener("change", () => {
+
+//         if (notborrowed.checked) {
+//           const borrowed = document.querySelectorAll(".popup")
+//             borrowed.forEach((inputField) => {
+//               const borrowedRows = inputField
+//                 .closest("tr")
+//                 .style.visibility="collapse"});
+          
+//           console.log("Checkbox is checked..");
+//         } else {
+//           const borrowed = document.querySelectorAll(".popup")
+//             borrowed.forEach((inputField) => {
+//               const borrowedRows = inputField
+//                 .closest("tr")
+//                 .style.visibility=null});
+//           console.log("Checkbox is not checked..");
+//         };
+//         // if (notborrowed.checked) {
+          
+//         // }
+//     });
+
+//     const input = document.querySelector(".General-search")
+//     const tableRows = document.querySelector("#table_body")
+//       .querySelectorAll("tr");
+//     // console.log("tableRows",tableRows)
+//     const searchallCells = Array.from(tableRows).map(
+//         (rowall) => rowall.querySelectorAll("td")
+      
+//       );
+    
+//       input.addEventListener("input", () => {
+//       console.log(document.querySelectorAll(".search-input"))
+//       const searchQuery = input.value.toLowerCase();
+//       // const row = tableCell.parentElement;
+
+//       for (const row of tableRows) {
+//         var result = -1
+//         row.style.visibility = null;
+//         // console.log("row",row)
+//         var coldata = Object.values(row.children);
+//         coldata.pop()
+//         console.log("coldata",typeof coldata)
+//         for (const column of coldata) {
+//         // const row = tableCell.parentElement;
+//         console.log("column",column)
+        
+//         var value = column.innerText.toLowerCase().replace(",", "");
+
+          
+
+//           if (value.search(searchQuery) === -1) {
+//             var result = -1;
+//           } else {
+//             var result = 1;
+//             break;
+//           };
+
+//       }
+//       if (value.search(searchQuery) === -1) {
+//         row.style.visibility = "collapse";
+//       }
+//       };
+      
+//   });
+
+// });
+
+
+// const avail = document.querySelectorAll("label[for='check_device']");
+// avail.addEventListener('click',(avails) => {
+//       const checkbox = document.querySelectorAll("input[type='checkbox']");
+//       if (condition) {
+//         label
+//       }
+// });
+
+/**
+ * Sorts a HTML table.
+ * 
+ * @param {HTMLTableElement} table The table to sort
+ * @param {number} column The index of the column to sort
+ * @param {boolean} asc Determines if the sorting will be in ascending
+ */
+ 
+ function sortTableByColumn(table, column, asc = true) {
+    const dirModifier = asc ? 1 : -1;
+    const tBody = table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll("tr"));
+
+    // Sort each row
+    const sortedRows = rows.sort((a, b) => {
+        const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+        const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+    });
+
+    // Remove all existing TRs from the table
+    while (tBody.firstChild) {
+        tBody.removeChild(tBody.firstChild);
+    }
+
+    // Re-add the newly sorted rows
+    tBody.append(...sortedRows);
+
+    // Remember how the column is currently sorted
+    table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+}
+
+document.querySelectorAll(".table-sortable th").forEach(headerCell => {
+    headerCell.addEventListener("click", () => {
+        const tableElement = headerCell.parentElement.parentElement.parentElement;
+        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+        const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+    });
+});
+
+
+
+
+
+
+// for (var i = 0; i < 10;i++);{
+//     console.log(i);
+// }
+
+// var myTableArray = [];
+
+// $("table#dev_table tr").each(function() {
+//     var arrayOfThisRow = [];
+//     var tableData = $(this).find('td');
+//     var tableheader = $(this).find('th');
+//     if (tableData.length > 0) {
+//         tableData.each(function() { arrayOfThisRow.push({$(this).text();:$(this).text()}); });
+//         myTableArray.push(arrayOfThisRow);
+//     }
+// });
+// console.log("myTableArray",myTableArray)
+// // alert(myTableArray);
+
+// // var table_data = document.getElementById("dev_table")//$("table_body").val()
+// // var colnames = document.getElementById()
+// // console.log("table1 ",table1)
+
+
+// // var myArray = buildarray()
+// // console.log("myArray",myArray)
+// buildTable()
+
+
+
+//  $('th').on('click', function(){
+//      var column = $(this).data('colname');
+//      var order = $(this).data('order');
+//      var text = $(this).html();
+//      text = text.substring(0, text.length - 1);
+     
+     
+     
+//      if (order == 'desc'){
+//         myArray = myArray.sort((a, b) => a[column] > b[column] ? 1 : -1)
+//         $(this).data("order","asc");
+//         text += '&#9660'
+    
+//      }else if (order == ''){
+//         myArray = myArray.sort((a, b) => a[column] > b[column] ? 1 : -1)
+//         $(this).data("order","asc");
+//         text += '&#9660'
+//      }else{
+//         myArray = myArray.sort((a, b) => a[column] < b[column] ? 1 : -1)
+//         $(this).data("order","desc");
+//         text += '&#9650'
+//      }
+
+//     $(this).html(text)
+//     buildTable(myArray)
+//     })
+
+
+   
+ 
+// buildTable()
+
+// function buildarray(titles){
+//     var table_body = document.getElementById('table_body').rows
+//     // var titles = document.getElementsByTagName("th")
+//     // var x = table_body.length
+//     // console.log("table_body",table_body)
+//     // console.log("titles",titles)
+//     // var y = titles.length 
+//     var myArray = new Array();
+//     var  data = {};
+//     for (var i = 0; i < 50; i++); {
+//         // var Obj = []
+//         // for (var j = 0; j < titles.length-1; j++); {
+//             // console.log("titles[j]",titles[j].innerHTML)
+//             // console.log("table_body[i][j]",table_body[i].cells[j].innerHTML)
+//             // Obj[`${titles[j].innerHTML}`] = table_body[i].cells[j].innerHTML
+//             // console.log("Obj1 ",Obj)
+//         console.log(i)
+//         myArray.push({Device_Name :table_body[i].cells[0].innerHTML,	
+//         Device_Type:table_body[i].cells[1].innerHTML,
+//         OS_Type:table_body[i].cells[2].innerHTML,
+//         OS_Version:table_body[i].cells[3].innerHTML,
+//         Ram:table_body[i].cells[4].innerHTML,
+//         CPU:table_body[i].cells[5].innerHTML,
+//         Bits:table_body[i].cells[6].innerHTML,
+//         Screen_Resolution:table_body[i].cells[7].innerHTML,
+//         Grade:table_body[i].cells[8].innerHTML,
+//         UUID:table_body[i].cells[9].innerHTML,
+//         Available:table_body[i].cells[10].innerHTML});
+        
+//         // Obj = Object.assign({},Obj)
+//         // console.log("Obj ",Obj)
+//         // myArray[i]=Obj;
+//         // myArray.push(data)
+
+        
+//     }
+//     console.log("myArray ",myArray);
+//     return myArray
+// }
+
+// function buildTable(){
+//     var titles = document.getElementsByTagName("th");
+//     data = buildarray(titles);
+//     var table = document.getElementById('dev_table');
+//     // table_body.innerHTML = ''
+//     console.log("data.length ", data.length);
+//     for (var i = 0; i < data.length; i++){
+        
+//         // for (var j = 0; j < titles.length; i++){
+//         var colname = `name-${i}`
+//         var colage = `age-${i}`
+//         var colbirth = `birth-${i}`
+//         console.log(data)
+//         var row = `<tr>
+//                         <td>${data[i].Device_Name}</td>
+//                         <td>${data[i].Device_Type}</td>
+//                         <td>${data[i].OS_Type}</td>
+//                         <td>${data[i].OS_Version}</td>
+//                         <td>${data[i].Ram}</td>
+//                         <td>${data[i].CPU}</td>
+//                         <td>${data[i].Bits}</td>
+//                         <td>${data[i].Screen_Resolution}</td>
+//                         <td>${data[i].Grade}</td>
+//                         <td>${data[i].UUID}</td>
+//                         <td>${data[i].Available}</td>
+//                     </tr>`
+                    
+//         table_body.innerHTML += row
+//     }
+// }
+
+function myFunction(texts) {
+  window.alert(texts);
+  }
+
+
+</script> -->
+<!-- {% endblock %} -->

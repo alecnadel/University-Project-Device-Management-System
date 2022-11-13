@@ -1,0 +1,27 @@
+{% extends "root.html" %}
+{% block content %}
+<div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h5 class="modal-title">Device tracking system</h5>
+            </div>
+
+            <div class="modal-body p-5 pt-0">
+                <form action="/login" method="POST">
+                    <labe>Select your username</labe>
+                    <select class="form-select" name="username">
+                        {% for user in users %}
+                        <option value={{user[0]}}>{{user[0]}} {% if user[1] == 1 %} (Admin) {% endif %}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

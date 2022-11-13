@@ -1,0 +1,55 @@
+{% extends "root.html" %}
+{% block content %}
+<div class="table-responsive">
+<table id="table"
+			 data-click-to-select="true"
+       class="table">
+	<thead>
+		<tr>
+
+            {% for col in dev_headers %}
+            <th>{{col}}</th>
+            {% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+        {% for device in devices %}
+        <style>
+            table td:hover {
+            background-color: rgba(0,0,0,.075);
+            }
+        </style>
+        <tr>
+            <td>{{device[0]}}</td>
+            <td>{{device[1]}}</td>
+            <td>{{device[2]}}</td>
+            <td>{{device[3]}}</td>
+            <td>{{device[4]}}</td>
+            <td>{{device[5]}}</td>
+            <td>{{device[6]}}</td>
+            <td>{{device[7]}}</td>
+            <td>{{device[8]}}</td>
+
+            {% if device[9] == 0 %}
+                <td id="availability">
+                    <button class="popup btn btn-danger" onclick="myFunction('borrowed by {{device[10]}} and will be available on the {{device[11]}}')">
+                        Unavailable
+                    </button>
+                </td>
+                {% else %}
+            <td>Available</td>
+        {% endif%}
+        </tr>
+        {% endfor %}
+
+	</tbody>
+</table>
+</div>
+
+<script>
+function myFunction(texts) {
+window.alert(texts);
+}
+</script>
+
+{% endblock %}

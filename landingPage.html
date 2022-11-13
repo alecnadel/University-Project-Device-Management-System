@@ -1,0 +1,83 @@
+{% block content %}
+    {% if borrowed %}
+        <h3>Borrowed Devices</h3>
+        <table class="table table-striped table-bordered table-sm">
+            <thead>
+            <tr>
+                <th scope="col" class="col-md-4">Device Name</th>
+                <th scope="col" class="col-md-4">End Date</th>
+
+
+                <th scope="col" class="col-md-4">
+                    <form action="/dev_return_all" method="POST">
+
+                        {% for userdevice in borrowed %}
+                            <input id="borrowed" name="borrowed" type="hidden" value="{{ userdevice[0] }}">
+                        {% endfor %}
+                        <input type="submit" class="form-control btn-dark col-sm-2" value="Return All">
+                    </form>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for userdevice in borrowed %}
+                <tr>
+                    <td scope="col" class="col-md-4">{{ userdevice[0] }}</td>
+                    <td scope="col" class="col-md-4">{{ userdevice[1] }}</td>
+                    <td scope="col" class="col-md-4">
+                        <form action="/dev_return" method="POST">
+                            <input id="device_name" name="device_name" type="hidden" value="{{ userdevice[0] }}">
+                            <input type="submit" class="form-control btn-dark col-sm-2" value="Return">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if overdue %}
+        <h3>Overdue Devices</h3>
+        <table class="table table-striped table-bordered table-sm">
+            <thead>
+            <tr>
+                <th scope="col" class="col-md-4">Device Name</th>
+                <th scope="col" class="col-md-4">End Date</th>
+                <th scope="col" class="col-md-4">
+                    <form action="/dev_return_all" method="POST">
+                        {% for userdevice in overdue %}
+                            <input id="overdue" name="overdue" type="hidden" value="{{ userdevice[0] }}">
+                        {% endfor %}
+                        <input type="submit" class="form-control btn-dark col-sm-2" value="Return All">
+                    </form>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for userdevice in overdue %}
+                <tr>
+                    <td scope="col" class="col-md-4">{{ userdevice[0] }}</td>
+                    <td scope="col" class="col-md-4">{{ userdevice[1] }}</td>
+                    <td scope="col" class="col-md-4">
+                        <form action="/dev_return" method="POST">
+                            <input id="device_name" name="device_name" type="hidden" value="{{ userdevice[0] }}">
+                            <input type="submit" class="form-control btn-dark col-sm-2" value="Return">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if empty %}
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <div>
+                No Overdue Devices Or Borrowing Devices available.
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

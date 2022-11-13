@@ -1,0 +1,308 @@
+{% extends "root.html" %}
+{% block content %}
+{% block header %} 
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="home" viewBox="0 0 16 16">
+      <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+  </symbol>
+  <symbol id="people-circle" viewBox="0 0 16 16">
+      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+      <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+  </symbol>
+</svg>
+<header>
+  <div class="px-3 py-2 bg-dark text-white">
+      <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+              <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+              </a>
+
+              <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                  <li>
+                    <!-- <li>
+                      <a href="/Search" class="nav-link text-white">
+                        <br>
+                          Devices
+                      </a>
+                  </li> -->
+                  <li>
+                      <a href="/user/home" class="nav-link text-white">
+                          <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                              <use xlink:href="#home"/>
+                          </svg>
+                          Home
+                      </a>
+                  </li>
+                  <a href="/user/profile" class="nav-link text-white">
+                      <svg class="d-block mx-auto mb-1" style="fill: #fff;" width="24" height="24">
+                          <use xlink:href="#people-circle"/>
+                      </svg>
+                      Profile
+                  </a>
+                  </li>
+              </ul>
+              <a class="btn btn-outline-primary" href="/">Logout</a>
+          </div>
+      </div>
+  </div>
+</header>
+{% endblock %}
+{% block search %}
+
+<div class="row justify-content-center">
+  <form class="mb-3 row px-3 py-5" action="{{url_for('Search')}}" method="POST">
+    
+    <div class="row justify-content-center">
+      <div class="col-sm-1 px-3 py-2">
+        <label for="general_search" class="col-sm-2 col-form-label">Search: </label>
+      </div>
+      <div class="col-lg-6 px-3 py-2">
+        <input type="text" class="form-control" id="general_search" 
+              name="general_search" placeholder="Search">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-2 py-2 px-3">
+        <input class="form-control mb-3" type="submit" value="Search">
+      </div>
+      <div class="col-sm-2 py-2 px-3">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Condiction filters
+        </button>
+      </div>
+      <div class="collapse" id="collapseExample">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="card card-body">
+
+              
+              <label for="Device_Name" class="col-sm-3 col-form-label">Device Name: </label>
+              <input type="text" class="form-control" id="Device_Name" 
+                  name="Device_Name" placeholder="Search">
+          
+              <label for="Device_Type" class="col-sm-3 col-form-label">Device Type: </label>
+              <input type="text" class="form-control" id="Device_Type" 
+                  name="Device_Type" placeholder="Search">
+          
+              <label for="OS_Version" class="col-sm-3 col-form-label">OS Version: </label>
+              <input type="text" class="form-control" id="OS_Version" 
+                  name="OS_Version" placeholder="Search">
+              
+              <label for="CPU" class="col-sm-3 col-form-label">CPU: </label>
+              <input type="text" class="form-control" id="CPU" 
+                  name="CPU" placeholder="Search">
+              
+              <label for="Screen_Resolution" class="col-sm-3 col-form-label">Screen Resolution: </label>
+              <input type="text" class="form-control" id="Screen_Resolution" 
+                  name="Screen_Resolution" placeholder="Search">
+          
+              <label for="UUID" class="col-sm-3 col-form-label">UUID: </label>
+              <input type="text" class="form-control" id="UUID" 
+                  name="UUID" placeholder="Search">
+          
+              
+              <label for="OS_Type" class="col-sm-3 col-form-label">OS Type: </label>
+              <select class="form-select" name="OS_Type" id="OS_Type">
+                <option selected value="">Select menu</option>
+                {% for inputs in dbselections[0] %}
+                  <option value="{{inputs}}">{{inputs}}</option>
+                {% endfor %}
+              </select>
+              
+              
+              <label for="Ram" class="col-sm-3 col-form-label">Ram: </label>
+              <select class="form-select" name="Ram"  id="Ram">
+                <option selected value="">Select menu</option>
+                {% for inputs in dbselections[1] %}
+                  <option value="{{inputs}}">{{inputs}}</option>
+                {% endfor %}
+              </select>
+              
+              <label for="Bits" class="col-sm-3 col-form-label">Bits: </label>
+              <select class="form-select" name="Bits" id="Bits">
+                  <option selected value="">Select menu</option>
+                  {% for inputs in dbselections[2] %} 
+                    <option value="{{inputs}}">{{inputs}}</option>
+                  {% endfor %}
+              </select>
+              
+              <label for="Grade" class="col-sm-3 col-form-label">Grade: </label>
+              <select class="form-select" name="Grade" id="Grade">
+                <option selected value="">Select menu</option>
+                {% for inputs in dbselections[3] %}
+                  <option value="{{inputs}}">{{inputs}}</option>
+                {% endfor %}
+              </select>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="Available" id="Available">
+                <label class="form-check-label" for="Available">
+                  Available
+                </label>
+              </div>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+{% block table %}
+{% if devices|length >= 1 %}
+
+<div class="table-responsive">
+  <table id="table"
+              data-click-to-select="true"
+      class="table">
+      <thead>
+          <tr>
+
+              {% for col in dev_headers %}
+              <th>{{col}}</th>
+              {% endfor %}
+          </tr>
+      </thead>
+      <tbody>
+          {% for device in devices %}
+          <style>
+              table td:hover {
+              background-color: rgba(0,0,0,.075);
+              }
+          </style>
+          <tr>
+              <td>{{device[0]}}</td>
+              <td>{{device[1]}}</td>
+              <td>{{device[2]}}</td>
+              <td>{{device[3]}}</td>
+              <td>{{device[4]}}</td>
+              <td>{{device[5]}}</td>
+              <td>{{device[6]}}</td>
+              <td>{{device[7]}}</td>
+              <td>{{device[8]}}</td>
+              <td>{{device[9]}}</td>
+              {% if device[10] == 0 %}
+                  <td id="availability">
+                      <button class="popup btn btn-danger" onclick="myFunction('borrowed by {{device[11]}} and will be available on the {{device[12]}}')">
+                          Unavailable
+                      </button>
+                  </td>
+                  {% else %}
+              <td>Available</td>
+          {% endif%}
+          </tr>
+          {% endfor %}
+
+      </tbody>
+  </table>
+</div>
+
+{% else %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+  <div>
+    No devices found fitting your search requirements
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+</script>
+
+<script>
+  
+
+
+
+  var myArray = [
+      {'name':'Michael', 'age':'30', 'birthdate':'11/10/1989'},
+      {'name':'Mila', 'age':'32', 'birthdate':'10/1/1989'},
+      {'name':'Paul', 'age':'29', 'birthdate':'10/14/1990'},
+      {'name':'Dennis', 'age':'25', 'birthdate':'11/29/1993'},
+      {'name':'Tim', 'age':'27', 'birthdate':'3/12/1991'},
+      {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+  ]
+  
+  
+  buildTable(myArray)
+  
+  
+  
+   $('th').on('click', function(){
+       var column = $(this).data('colname')
+       var order = $(this).data('order')
+       var text = $(this).html()
+       text = text.substring(0, text.length - 1);
+       
+       
+       
+       if (order == 'desc'){
+          myArray = myArray.sort((a, b) => a[column] > b[column] ? 1 : -1)
+          $(this).data("order","asc");
+          text += '&#9660'
+       }else{
+          myArray = myArray.sort((a, b) => a[column] < b[column] ? 1 : -1)
+          $(this).data("order","desc");
+          text += '&#9650'
+       }
+  
+      $(this).html(text)
+      buildTable(myArray)
+      })
+  
+  
+     
+   
+      
+  function buildTable(data){
+      var table = document.getElementById('myTable')
+      table.innerHTML = ''
+      for (var i = 0; i < data.length; i++){
+          var colname = `name-${i}`
+          var colage = `age-${i}`
+          var colbirth = `birth-${i}`
+  
+          var row = `<tr>
+                          <td>${data[i].name}</td>
+                          <td>${data[i].age}</td>
+                          <td>${data[i].birthdate}</td>
+                     </tr>`
+          table.innerHTML += row
+      }
+  }
+  
+  </script>
+
+
+
+
+<!-- <div class="alert alert-danger d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </svg>
+  <div>
+     No devices found fit your search requirments
+  </div>
+</div> -->
+{% endif %}
+{% endblock %}
+{% endblock %}

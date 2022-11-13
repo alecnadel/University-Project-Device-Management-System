@@ -1,0 +1,58 @@
+{% extends "user/home.html" %}
+{% block section %}
+<div class="w-75 px-5 py-2 mx-auto mt-4">
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Personal Profile</h4>
+        <form action="/user/profile" method="POST" class="needs-validation" novalidate>
+            <input type="hidden"  id="Role1" name="Role" value=0>
+            <input type="hidden"  id="status1" name="status" value=1>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="username" value="{{user[0]}}" disabled required>
+                </div>
+
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control required" id="email" placeholder="you@example.com" name="email"
+                           value="{{user[2]}}" required="required">
+                    <div class="invalid-input" style="color:#dc3545" hidden>
+                        Please enter a valid email address .
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control required" id="phone" name="phone"
+                           pattern='^[0][1-9]\d{9}$|^[1-9]\d{9}$'
+                           placeholder="02102221111" value="{{user[1]}}" required="required">
+                    <div class="invalid-input" style="color:#dc3545" hidden>
+                        Please enter your New Zealand phone number 10-12 digit.
+                    </div>
+                </div>
+
+                <!-- <div class="col-12">
+                    <label for="Location" class="form-label">Location</label>
+                    <input type="text" class="form-control required" id="Location" name="Location" value="{{user[4]}}" required="required">
+                    <div class="invalid-input" style="color:#dc3545" hidden>
+                        Please enter the assigned office location. 
+                    </div> <br>
+                </div> <br> -->
+                <label for="Location" class="form-label">Location</label>
+                <select id="Location" class="form-select" name="Location" class="form-select">
+                <!-- <option>No office location selected</option> -->
+      
+                    {% for office in locations %}
+                        {%if office[0] == userdetails[4]%}
+                            <option value="{{office[0]}}" selected="selected">{{office[0]}}</option>
+                        {% else %}
+                            <option value="{{office[0]}}">{{office[0]}}</option>   
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div> <br>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Update</button> 
+        </form>
+    </div>
+</div>
+{% endblock %}

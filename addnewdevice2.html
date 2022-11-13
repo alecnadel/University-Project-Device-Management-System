@@ -1,0 +1,205 @@
+{% extends "admin/home.html" %}
+{% block section %}
+
+
+<div class="container mh-90">
+    
+
+    
+    
+    <form action="/admin/addnewdevice" method="POST" class="needs-validation"
+        novalidate>
+      
+        <div class="row justify-content-center">
+          <div class="col-md-4 my-3">
+            <h3 class="">Edit Device Infomation</h3>
+            
+            <label for="Device_Name">Device Name</label>
+            <input type="text" id="Device_Name" name="Device_Name" class="form-control"
+                      placeholder="Name" required> 
+            {% if device %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Device Name already exists try another
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+            {% endif %}
+            <div class="invalid-input" style="color:#dc3545" hidden>
+                New Device name required 
+            </div>
+            
+                      
+          </div>
+          <div class="col-md-4">
+
+          </div>
+
+        </div>
+      
+      
+
+        <div class="row justify-content-center">
+          
+            
+
+          <div class="col-md-4">
+            
+
+            <fieldset class="border py-2 px-2">
+              <legend>Device info</legend>
+            <div class="row">
+              <div class="col">
+                <label for="Device_Type">Device Type</label>
+                <input type="text" id="Device_Type" name="Device_Type" class="form-control form-control-sm my-2"
+                        {% if device %} value="{{device[1]}}" {% endif %} required="required">  
+                <div class="invalid-input" style="color:#dc3545" hidden>
+                    Device Type required
+                </div>
+                 
+                  
+                <label for="OS_Type">OS Type</label>
+                  
+                <input type="text" class="form-control  form-control-sm my-2" id="OS_Type" name="OS_Type"
+                    {% if device %} value="{{device[2]}}" {% endif %} required="required"/> 
+                <div class="invalid-input" style="color:#dc3545" hidden>
+                  OS Type required
+                </div>
+                
+                
+                <!-- {# <select id="OS_Type" name="OS_Type" class="form-select form-select-sm my-1" aria-label=".form-select-sm">
+                 <option value="">None</option>
+                  {% for OS_Type in select_options[0] %}
+                  
+                    
+                        <option selected="selected" value="{{OS_Type}}">{{OS_Type}}</option>
+                    {%else%}
+                        <option value="{{OS_Type}}">{{OS_Type}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select> #}--> 
+                
+                
+
+                <label for="OS_Version">OS Version</label>
+                <input type="text" id="OS_Version" name="OS_Version" class="form-control form-control-sm my-2"
+                    {% if device %} value="{{device[3]}}" {% endif %} required="required">  
+                <div class="invalid-input" style="color:#dc3545" hidden>
+                    OS Version required
+                </div>  
+
+                  <label for="Ram">Ram</label>
+                <input type="text" id="Ram" name="Ram" class="form-control form-control-sm my-2"
+                    {% if device %} value="{{device[4]}}" {% endif %} >  
+                <!-- <div class="invalid-input" style="color:#dc3545" hidden>
+                    Please enter valid Ram
+                </div>  -->
+
+                <label for="CPU">CPU</label>
+                <input type="text" id="CPU" name="CPU" class="form-control form-control-sm my-2"
+                    {% if device %} value="{{device[5]}}" {% endif %}>  
+                <!-- <div class="invalid-input" style="color:#dc3545" hidden>
+                    Please enter valid CPU
+                </div>  -->
+
+                
+              </div>
+            </div>
+            </fieldset>
+          </div>
+          
+          <div class="col-md-4">
+
+            <fieldset class="border py-2 px-2">
+              <legend>Device system specification</legend>
+              <!-- <label for="Bits">Bits</label>
+              <input type="text" id="Bits" name="Bits" class="form-control"
+                          >  
+              <div class="invalid-input" hidden>
+                  Please enter valid Bits
+              </div>  -->
+              <label for="Bits">Bits</label>
+                <select id="Bits" name="Bits" class="form-select form-select-sm my-2" aria-label=".form-select-sm">
+                <option value="">None</option>
+                  {% for Bits in select_options[1] %}
+                        {% if device[6] == Bits %}
+                            <option value="{{Bits}}" selected="selselected">{{Bits}}</option>
+                        {% else %}
+                            <option value="{{Bits}}">{{Bits}}</option>
+                        {% endif %}
+                  {% endfor %}
+                </select>
+                
+
+              <label for="Screen_Resolution">Screen Resolution</label>
+              <input type="text" id="Screen_Resolution" name="Screen_Resolution" class="form-control form-control-sm my-2"
+                    {% if device %} value="{{device[7]}}" {% endif %}>  
+              <!-- <div class="invalid-input" style="color:#dc3545" hidden>
+                  Please enter valid Screen Resolution
+              </div>  -->
+
+              <label for="Grade">Grade</label>
+              <select id="Grade" name="Grade" class="form-select form-select-sm my-1" aria-label=".form-select-sm">
+              <option value="">None</option>
+                {% for Grade in select_options[2] %}
+                    {% if device[8]  == Grade %}
+                     <option value="{{Grade}}" selected="selected">{{Grade}}</option>
+                    {% else %}
+                    <option value="{{Grade}}" >{{Grade}}</option>
+                    {% endif %}
+                
+                {% endfor %}
+              </select>
+              <!-- <label for="Grade">Grade</label>
+              <input type="text" id="Grade" name="Grade" class="form-control"
+                          >  
+              <div class="invalid-input" hidden>
+                  Please enter valid Grade
+              </div>-->
+
+              <label for="UUID">UUID</label>
+              <input type="text" id="UUID" name="UUID" class="form-control form-control-sm my-2"
+                    {% if device %} value="{{device[9]}}" {% endif %}>  
+              <!-- <div class="invalid-input" style="color:#dc3545" hidden>
+                  Please enter valid UUID
+              </div>  -->
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="row  justify-content-md-center"> 
+          <div class="col-2 my-1">
+            <fieldset class="p-2">
+              <legend>Active Status</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Available" id="Activity1" value=1 checked="checked">
+              <label class="form-check-label" for="Activity1">
+                Active
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Available" value=0 id="Activity2" >
+              <label class="form-check-label" for="Activity2">
+                Inactive
+              </label>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="row justify-content-md-center">
+          <div class="col-md-3 py-2 px-3">
+            <button type="reset" class="btn w-100 btn-light btn-sm border">Reset</button>
+            <!-- class="form-control form-control-sm btn-light border btn-md" > -->
+          </div>
+          <div class="col-md-3 py-2 px-3">
+            <button class="btn  w-100 btn-primary btn-sm" type="submit">Update
+            </button>
+            <!-- <input type="submit"  class="form-control form-control-sm btn-dark btn-md" value="Update"> -->
+          </div>
+        </div>            
+
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
